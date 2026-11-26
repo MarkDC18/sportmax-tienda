@@ -1,14 +1,17 @@
 // Configuración pública de la aplicación web.
 window.APP_CONFIG = {
-  // CAMBIA ESTO por la URL de tu backend (localhost o tu Render)
-  API_BASE_URL: "http://localhost:5000", 
+  // URL de tu backend en Render (Ya está lista y funcionando)
+  API_BASE_URL: "https://sportmax-tienda.onrender.com",
+  
+  // Credenciales de Firebase (Cámbialas cuando crees tu proyecto)
   FIREBASE: {
-    apiKey: "AIzaSyDkrRBS0JjiTArduSD71_dW05dLrnBcgSo",
-    authDomain: "yancasaycoc.firebaseapp.com",
-    projectId: "yancasaycoc",
-    storageBucket: "yancasaycoc.firebasestorage.app",
-    messagingSenderId: "695992987149",
-    appId: "1:695992987149:web:1fedb772b9ef0e768caf44"
+    apiKey: "TU_API_KEY_AQUI",
+    authDomain: "sportmax-inventario.firebaseapp.com",
+    projectId: "sportmax-inventario",
+    storageBucket: "sportmax-inventario.appspot.com",
+    messagingSenderId: "TU_SENDER_ID_AQUI",
+    appId: "TU_APP_ID_AQUI"
   },
+  
   SYNC_INTERVAL_MS: 20000
 };
