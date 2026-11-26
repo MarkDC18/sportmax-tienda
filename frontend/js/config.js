@@ -1,12 +1,12 @@
 window.APP_CONFIG = {
   API_BASE_URL: "https://sportmax-tienda.onrender.com",
   FIREBASE: {
-    apiKey: "AIzaSyAiBy_yrmQ7TnUR8K0T_JMnrLJKtLlUhBcI",
-    authDomain: "planning-with-ai-5b8e3.firebaseapp.com",
-    projectId: "planning-with-ai-5b8e3",
-    storageBucket: "planning-with-ai-5b8e3.firebasestorage.app",
-    messagingSenderId: "678258518827",
-    appId: "1:678258518827:web:d0ea572a0976ff26b736e"
+    apiKey: "AIzaSyD1mMhAjcBv0d6LBAvadpYK2LZRZig0cgQ",
+    authDomain: "sportmax-app-6fe98.firebaseapp.com",
+    projectId: "sportmax-app-6fe98",
+    storageBucket: "sportmax-app-6fe98.firebasestorage.app",
+    messagingSenderId: "931889059587",
+    appId: "1:931889059587:web:aa09627a09a92a96a783b36"
   },
   SYNC_INTERVAL_MS: 20000
 };
