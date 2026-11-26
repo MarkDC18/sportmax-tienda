@@ -1,17 +1,12 @@
-// Configuración pública de la aplicación web.
 window.APP_CONFIG = {
-  // URL de tu backend en Render (Ya está lista y funcionando)
   API_BASE_URL: "https://sportmax-tienda.onrender.com",
-  
-  // Credenciales de Firebase (Cámbialas cuando crees tu proyecto)
   FIREBASE: {
-    apiKey: "TU_API_KEY_AQUI",
-    authDomain: "sportmax-inventario.firebaseapp.com",
-    projectId: "sportmax-inventario",
-    storageBucket: "sportmax-inventario.appspot.com",
-    messagingSenderId: "TU_SENDER_ID_AQUI",
-    appId: "TU_APP_ID_AQUI"
+    apiKey: "AIzaSyAiBy_yrmQ7TnUR8K0T_JMnrLJKtLlUhBcI",
+    authDomain: "planning-with-ai-5b8e3.firebaseapp.com",
+    projectId: "planning-with-ai-5b8e3",
+    storageBucket: "planning-with-ai-5b8e3.firebasestorage.app",
+    messagingSenderId: "678258518827",
+    appId: "1:678258518827:web:d0ea572a0976ff26b736e"
   },
-  
   SYNC_INTERVAL_MS: 20000
 };
