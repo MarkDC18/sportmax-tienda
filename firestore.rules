@@ -1,0 +1,10 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // El backend usa Firebase Admin SDK y omite estas reglas.
+    // No se permite acceso directo anónimo desde clientes web.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

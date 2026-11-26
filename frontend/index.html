@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SportMax | Tienda Deportiva</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="top-bar">
+    <span>ENVÍO GRATIS A TODO EL PAÍS POR COMPRAS MAYORES A S/ 150</span>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-brand">SPORTMAX</div>
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Buscar productos...">
+      <i class="fas fa-search"></i>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#hombres">Hombre</a></li>
+      <li><a href="#mujeres">Mujer</a></li>
+      <li><a href="#ninos">Niños</a></li>
+      <li><a href="#" class="highlight">Ofertas</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button id="btn-admin" class="btn-admin"><i class="fas fa-cog"></i> Admin</button>
+      <div class="cart-icon" id="cart-btn">
+        <i class="fas fa-shopping-bag"></i>
+        <span class="cart-count" id="cart-count">0</span>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero-banner">
+    <div class="hero-content">
+      <h1>HASTA<br><span>50% OFF</span></h1>
+      <p>Equípate con lo mejor para tu entrenamiento.</p>
+      <a href="#hombres" class="btn-shop">Ver Colección</a>
+    </div>
+  </header>
+
+  <div class="benefits-bar">
+    <div class="benefit-item">🚚 Envío gratis</div>
+    <div class="benefit-item">💳 3 cuotas sin intereses</div>
+    <div class="benefit-item">🔄 Devoluciones gratis</div>
+  </div>
+
+  <main class="main-content" id="hombres">
+    <div class="catalog-header">
+      <h2>Colección Hombre</h2>
+      <button class="btn-sync" id="sync-now"><i class="fas fa-sync"></i> Sincronizar</button>
+    </div>
+    <div id="items-hombres" class="items"></div>
+  </main>
+
+  <main class="main-content" id="mujeres" style="background: #f8fafc;">
+    <div class="catalog-header">
+      <h2>Colección Mujer</h2>
+    </div>
+    <div id="items-mujeres" class="items"></div>
+  </main>
+
+  <main class="main-content" id="ninos">
+    <div class="catalog-header">
+      <h2>Colección Niños</h2>
+    </div>
+    <div id="items-ninos" class="items"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>PRODUCTOS</h4>
+        <ul>
+          <li><a href="#">Mujer</a></li>
+          <li><a href="#">Hombre</a></li>
+          <li><a href="#">Calzado</a></li>
+          <li><a href="#">Zapatillas</a></li>
+          <li><a href="#">Ropa</a></li>
+          <li><a href="#">Accesorios</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>DEPORTES</h4>
+        <ul>
+          <li><a href="#">Fútbol</a></li>
+          <li><a href="#">Running</a></li>
+          <li><a href="#">Básquet</a></li>
+          <li><a href="#">Training</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>ASISTENCIA</h4>
+        <ul>
+          <li><a href="#">Dudas Frecuentes</a></li>
+          <li><a href="#">Realizar Pedidos</a></li>
+          <li><a href="#">Envíos y Entregas</a></li>
+          <li><a href="#">Devoluciones</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>SÍGUENOS</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-tiktok"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 SportMax. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- MODAL PRODUCTO -->
+  <div id="product-modal" class="modal">
+    <div class="modal-content-dark">
+      <span class="close-btn" onclick="document.getElementById('product-modal').style.display='none'">&times;</span>
+      <img id="modal-img" src="" alt="Producto">
+      <div class="modal-info">
+        <h2 id="modal-title">Nombre</h2>
+        <p id="modal-brand" class="brand-text">MARCA</p>
+        <p id="modal-detail" class="detail-text">Talla: X | Color: Y</p>
+        <p id="modal-price" class="price-text">S/ 0.00</p>
+        <p id="modal-stock" class="stock-text">Stock: 0 unidades</p>
+        <hr style="border-color: #e2e8f0; margin: 20px 0;">
+        <p id="modal-desc" class="desc-text">Descripción...</p>
+        <button id="modal-add-btn" class="btn-add-cart">
+          <i class="fas fa-shopping-bag"></i> AGREGAR AL CARRITO
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CARRITO -->
+  <div id="cart-modal" class="modal">
+    <div class="modal-content-dark-cart">
+      <span class="close-btn" onclick="document.getElementById('cart-modal').style.display='none'">&times;</span>
+      
+      <div id="cart-step-1">
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem; text-align: center; margin-bottom: 30px;">Bolsa de compra</h2>
+        <div id="cart-items-container" style="max-height: 400px; overflow-y: auto; padding-right: 10px;"></div>
+        <div style="border-top: 1px solid #e2e8f0; margin-top: 20px; padding-top: 20px;">
+          <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 900; margin-bottom: 30px;">
+            <span>TOTAL</span>
+            <span id="cart-total" style="color: #d4af37;">S/ 0.00</span>
+          </div>
+          <button onclick="irAlPago()" class="btn-checkout" style="border: 2px solid #0f172a; background: transparent; color: #0f172a; margin-bottom: 15px;">CONTINUAR CON LA COMPRA</button>
+          <button onclick="vaciarCarrito()" style="width: 100%; background: transparent; border: none; color: #64748b; text-decoration: underline; cursor: pointer; font-size: 0.9rem;">VACIAR BOLSA</button>
+        </div>
+      </div>
+
+      <div id="cart-step-2" style="display: none;">
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem; text-align: center; margin-bottom: 20px;">Finalizar Compra</h2>
+        <form id="payment-form">
+          <label>Nombre Completo<input type="text" id="pay-name" required placeholder="Ej: Juan Pérez"></label>
+          <label>Correo Electrónico<input type="email" id="pay-email" required placeholder="ejemplo@gmail.com"></label>
+          <label>Dirección de Envío<input type="text" id="pay-address" required placeholder="Av. Principal 123"></label>
+          
+          <label>Método de Pago
+            <select id="pay-method" required>
+              <option value="Tarjeta">Tarjeta de Crédito / Débito</option>
+              <option value="Yape">Yape / Plin</option>
+              <option value="Efectivo">Pago contra entrega</option>
+            </select>
+          </label>
+
+          <div id="card-details">
+            <label>Número de Tarjeta<input type="text" id="pay-card" required placeholder="0000 0000 0000 0000" maxlength="19"></label>
+            <div class="two">
+              <label>Vencimiento<input type="text" id="pay-exp" required placeholder="MM/YY" maxlength="5"></label>
+              <label>CVV<input type="password" id="pay-cvv" required placeholder="123" maxlength="3"></label>
+            </div>
+          </div>
+
+          <div class="actions" style="margin-top: 20px;">
+            <button type="button" class="secondary" onclick="volverAlCarrito()" style="background: #e2e8f0; color: #0f172a;">Volver</button>
+            <button type="submit" style="background: #10b981; color: white;">Pagar S/ <span id="pay-total">0.00</span></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL ADMIN -->
+  <div id="admin-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="document.getElementById('admin-modal').style.display='none'">&times;</span>
+      <h2>Panel de Administración</h2>
+      <form id="garment-form">
+        <input type="hidden" id="item-id">
+        <input type="hidden" id="item-version">
+        <label>Nombre del Artículo<input id="name" required maxlength="120" placeholder="Ej: Camiseta de Fútbol"></label>
+        <div class="two">
+          <label>Tipo
+            <select id="type" required>
+              <option value="">Seleccione...</option>
+              <option value="Camisa">Camisa / Polo</option>
+              <option value="Pelota">Pelota / Balón</option>
+              <option value="Calzado">Calzado / Zapatillas</option>
+              <option value="Accesorio">Accesorio</option>
+            </select>
+          </label>
+          <label>Marca<input id="brand" maxlength="50" placeholder="Ej: Nike, Adidas"></label>
+        </div>
+        <label>Descripción<input id="description" maxlength="500" placeholder="Detalles del producto..."></label>
+        <div class="two">
+          <label>Talla<input id="size" placeholder="Ej: M, 42, Única"></label>
+          <label>Color<input id="color" placeholder="Ej: Rojo, Azul"></label>
+        </div>
+        <div class="two">
+          <label>Precio (S/)<input id="price" type="number" min="0" step="0.01" required placeholder="0.00"></label>
+          <label>Stock<input id="stock" type="number" min="0" step="1" required placeholder="0"></label>
+        </div>
+        <div class="actions">
+          <button type="submit" style="background: #0f172a; color: white;">Guardar Artículo</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script type="module" src="js/firebase-init.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/sync-manager.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

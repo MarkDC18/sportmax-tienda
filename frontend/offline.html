@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SportMax | Tienda Deportiva</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- MENÚ SUPERIOR -->
+  <nav class="navbar">
+    <div class="nav-brand">SPORTMAX</div>
+    <ul class="nav-links">
+      <li><a href="#">Hombre</a></li>
+      <li><a href="#">Mujer</a></li>
+      <li><a href="#">Niños</a></li>
+      <li><a href="#" class="highlight">Ofertas 🔥</a></li>
+    </ul>
+    <div class="nav-actions">
+      <span id="connection" class="status">Comprobando...</span>
+      <button id="btn-admin" class="btn-admin">⚙️ Administrar</button>
+    </div>
+  </nav>
+
+  <!-- BANNER GIGANTE -->
+  <header class="hero-banner">
+    <div class="hero-content">
+      <h1>HASTA<br><span>50% OFF</span></h1>
+      <p>Equípate con lo mejor para tu entrenamiento.</p>
+      <a href="#catalogo" class="btn-shop">Ver Colección</a>
+    </div>
+  </header>
+
+  <!-- BARRA DE BENEFICIOS -->
+  <div class="benefits-bar">
+    <div class="benefit-item">🚚 Envío gratis a todo el país</div>
+    <div class="benefit-item">💳 Hasta 3 cuotas sin intereses</div>
+    <div class="benefit-item">🔄 Cambios y devoluciones gratis</div>
+  </div>
+
+  <!-- SECCIÓN DE CATEGORÍAS -->
+  <section class="categories-section">
+    <h2 class="section-title">Compra por Categoría</h2>
+    <div class="category-grid">
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80" alt="Zapatillas">
+        <div class="overlay"></div>
+        <h3>Calzado</h3>
+      </div>
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600&q=80" alt="Camisas">
+        <div class="overlay"></div>
+        <h3>Camisas</h3>
+      </div>
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1614632537423-1e6c2e7e0aab?w=600&q=80" alt="Pelotas">
+        <div class="overlay"></div>
+        <h3>Pelotas</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO PRINCIPAL -->
+  <main class="main-content" id="catalogo">
+    <div class="catalog-header">
+      <h2>Nuevos Ingresos</h2>
+      <button id="sync-now" class="btn-sync">🔄 Sincronizar</button>
+    </div>
+    
+    <!-- Aquí se inyectan los productos -->
+    <div id="items" class="items" aria-live="polite"></div>
+  </main>
+
+  <!-- FOOTER (PIE DE PÁGINA) -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Productos</h4>
+        <ul>
+          <li><a href="#">Zapatillas</a></li>
+          <li><a href="#">Ropa</a></li>
+          <li><a href="#">Accesorios</a></li>
+          <li><a href="#">Ofertas</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Deportes</h4>
+        <ul>
+          <li><a href="#">Fútbol</a></li>
+          <li><a href="#">Running</a></li>
+          <li><a href="#">Básquet</a></li>
+          <li><a href="#">Training</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Ayuda</h4>
+        <ul>
+          <li><a href="#">Estado del pedido</a></li>
+          <li><a href="#">Envíos y entregas</a></li>
+          <li><a href="#">Devoluciones</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Síguenos</h4>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">TikTok</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 SportMax. Todos los derechos reservados. Diseñado para el curso de Desarrollo de Aplicaciones Web.
+    </div>
+  </footer>
+
+  <!-- MODAL DEL FORMULARIO -->
+  <div id="admin-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="close-modal">&times;</span>
+      <h2>Panel de Administración</h2>
+      <p id="sync-status" role="status">Preparando almacenamiento local…</p>
+      
+      <form id="garment-form">
+        <input type="hidden" id="item-id">
+        <input type="hidden" id="item-version">
+        
+        <label>Nombre del Artículo<input id="name" required maxlength="120" placeholder="Ej: Camiseta de Fútbol"></label>
+        
+        <div class="two">
+          <label>Tipo
+            <select id="type" required>
+              <option value="">Seleccione...</option>
+              <option value="Camisa">Camisa / Polo</option>
+              <option value="Pelota">Pelota / Balón</option>
+              <option value="Calzado">Calzado / Zapatillas</option>
+              <option value="Accesorio">Accesorio</option>
+            </select>
+          </label>
+          <label>Marca<input id="brand" maxlength="50" placeholder="Ej: Nike, Adidas"></label>
+        </div>
+
+        <label>Descripción<input id="description" maxlength="500" placeholder="Detalles del producto..."></label>
+        
+        <div class="two">
+          <label>Talla<input id="size" placeholder="Ej: M, 42, Única"></label>
+          <label>Color<input id="color" placeholder="Ej: Rojo, Azul"></label>
+        </div>
+        
+        <div class="two">
+          <label>Precio (S/)<input id="price" type="number" min="0" step="0.01" required placeholder="0.00"></label>
+          <label>Stock<input id="stock" type="number" min="0" step="1" required placeholder="0"></label>
+        </div>
+        
+        <div class="actions">
+          <button type="submit">Guardar Artículo</button>
+          <button type="button" class="secondary" id="cancel-edit">Limpiar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script type="module" src="js/firebase-init.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/sync-manager.js"></script>
+  <script src="js/app.js"></script>
+  
+  <script>
+    const modal = document.getElementById('admin-modal');
+    document.getElementById('btn-admin').onclick = () => modal.style.display = 'block';
+    document.getElementById('close-modal').onclick = () => modal.style.display = 'none';
+    window.onclick = (event) => { if (event.target == modal) modal.style.display = 'none'; }
+  </script>
+</body>
+</html>
