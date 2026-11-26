@@ -9,21 +9,19 @@ public sealed class Garment
     public string Id { get; set; } = "";
     
     [FirestoreProperty]
-    public string Name { get; set; } = ""; // Nombre del producto (Ej: Camisa de Perú)
-    
-    // --- NUEVOS CAMPOS DEPORTIVOS ---
-    [FirestoreProperty]
-    public string Type { get; set; } = ""; // Tipo (Ej: Camisa, Pelota, Calzado)
+    public string Name { get; set; } = "";
     
     [FirestoreProperty]
-    public string Brand { get; set; } = ""; /
-    // --------------------------------
+    public string Type { get; set; } = ""; 
+    
+    [FirestoreProperty]
+    public string Brand { get; set; } = ""; 
 
     [FirestoreProperty]
     public string? Description { get; set; }
     
     [FirestoreProperty]
-    public string? Size { get; set; } // Talla (Ej: M, L, 42)
+    public string? Size { get; set; }
     
     [FirestoreProperty]
     public string? Color { get; set; }
@@ -46,8 +44,8 @@ public sealed class Garment
 
 public sealed record GarmentInput(
     string Name, 
-    string Type,      
-    string Brand,     
+    string Type,
+    string Brand,
     string? Description, 
     string? Size, 
     string? Color, 
@@ -56,8 +54,8 @@ public sealed record GarmentInput(
 
 public sealed record GarmentUpdate(
     string Name, 
-    string Type,      // NUEVO
-    string Brand,     // NUEVO
+    string Type,
+    string Brand,
     string? Description, 
     string? Size, 
     string? Color,
