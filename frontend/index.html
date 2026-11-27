@@ -29,7 +29,9 @@
       <li><a href="#" class="highlight">Ofertas</a></li>
     </ul>
     <div class="nav-actions">
-      <button id="btn-admin" class="btn-admin"><i class="fas fa-cog"></i> Admin</button>
+      <!-- CAMBIO 1: El botón ahora es un enlace a admin.html -->
+      <a href="admin.html" class="btn-admin" style="text-decoration: none; display: inline-flex; align-items: center;"><i class="fas fa-cog"></i> Admin</a>
+      
       <div class="cart-icon" id="cart-btn">
         <i class="fas fa-shopping-bag"></i>
         <span class="cart-count" id="cart-count">0</span>
@@ -149,42 +151,7 @@
     </div>
   </div>
 
-  <!-- MODAL ADMIN -->
-  <div id="admin-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="document.getElementById('admin-modal').style.display='none'">&times;</span>
-      <h2>Panel de Administración</h2>
-      <form id="garment-form">
-        <input type="hidden" id="item-id">
-        <input type="hidden" id="item-version">
-        <label>Nombre del Artículo<input id="name" required maxlength="120" placeholder="Ej: Camiseta de Fútbol"></label>
-        <div class="two">
-          <label>Tipo
-            <select id="type" required>
-              <option value="">Seleccione...</option>
-              <option value="Camisa">Camisa / Polo</option>
-              <option value="Pelota">Pelota / Balón</option>
-              <option value="Calzado">Calzado / Zapatillas</option>
-              <option value="Accesorio">Accesorio</option>
-            </select>
-          </label>
-          <label>Marca<input id="brand" maxlength="50" placeholder="Ej: Nike, Adidas"></label>
-        </div>
-        <label>Descripción<input id="description" maxlength="500" placeholder="Detalles del producto..."></label>
-        <div class="two">
-          <label>Talla<input id="size" placeholder="Ej: M, 42, Única"></label>
-          <label>Color<input id="color" placeholder="Ej: Rojo, Azul"></label>
-        </div>
-        <div class="two">
-          <label>Precio (S/)<input id="price" type="number" min="0" step="0.01" required placeholder="0.00"></label>
-          <label>Stock<input id="stock" type="number" min="0" step="1" required placeholder="0"></label>
-        </div>
-        <div class="actions">
-          <button type="submit" style="background: #0f172a; color: white;">Guardar Artículo</button>
-        </div>
-      </form>
-    </div>
-  </div>
+  <!-- CAMBIO 2: El MODAL ADMIN ha sido eliminado de este archivo -->
 
   <!-- AQUÍ ESTÁN LOS SCRIPTS QUE HACEN FUNCIONAR LOS BOTONES -->
   <script src="/js/config.js"></script>
