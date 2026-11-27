@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   
-  <!-- Conectamos al CSS que acabamos de crear -->
+  <!-- Conectamos al CSS que creamos -->
   <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
@@ -24,9 +24,6 @@
     <div class="admin-form-section">
       <h2>Registrar Prenda</h2>
       <form id="garment-form">
-        <input type="hidden" id="item-id">
-        <input type="hidden" id="item-version">
-        
         <div class="form-group">
           <label>Nombre del Artículo</label>
           <input id="name" required maxlength="120" placeholder="Ej: Camiseta de Fútbol">
@@ -99,59 +96,64 @@
   <script type="module" src="/js/firebase-init.js"></script>
   <script src="/js/db.js"></script>
   <script src="/js/sync-manager.js"></script>
-  <script src="/js/app.js"></script>
   
-  <!-- LÓGICA EXCLUSIVA DEL ADMIN -->
+  <!-- LÓGICA EXCLUSIVA DEL ADMIN (Conectada a tu API en Render) -->
   <script>
+    // Obtenemos la URL de la API de tu archivo config.js
+    const API_URL_ADMIN = window.APP_CONFIG.API_BASE_URL;
+
     document.addEventListener("DOMContentLoaded", () => {
       const form = document.getElementById("garment-form");
       const listContainer = document.getElementById("admin-product-list");
+      const syncBtn = document.getElementById("sync-now");
 
+      // 1. GUARDAR PRODUCTO (POST a tu API C#)
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const btn = document.getElementById("btn-submit");
         btn.textContent = "Guardando...";
         btn.disabled = true;
 
-        const garmentData = {
-          id: document.getElementById("item-id").value || null,
-          name: document.getElementById("name").value,
+        const data = {
+          name: document.getElementById("name").value.trim(),
           type: document.getElementById("type").value,
-          brand: document.getElementById("brand").value,
-          description: document.getElementById("description").value,
-          size: document.getElementById("size").value,
-          color: document.getElementById("color").value,
-          price: parseFloat(document.getElementById("price").value),
-          stock: parseInt(document.getElementById("stock").value)
+          brand: document.getElementById("brand").value.trim(),
+          description: document.getElementById("description").value.trim(),
+          size: document.getElementById("size").value.trim(),
+          color: document.getElementById("color").value.trim(),
+          price: Number(document.getElementById("price").value),
+          stock: Number(document.getElementById("stock").value)
         };
 
         try {
-          // AQUÍ SE CONECTA CON TU FUNCIÓN DE GUARDADO EXISTENTE
-          if (window.guardarProducto) {
-             await window.guardarProducto(garmentData);
+          const response = await fetch(`${API_URL_ADMIN}/api/garments`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+          });
+
+          if (response.ok) {
+            alert("¡Producto guardado con éxito en Firebase!");
+            form.reset();
+            cargarListaAdmin(); // Recargar la lista derecha
           } else {
-             console.log("Datos a guardar (Modo Demo):", garmentData);
-             alert("Producto guardado en modo Demo");
+            alert("Error al guardar. Revisa los datos.");
           }
-          form.reset();
-          document.getElementById("item-id").value = "";
-          cargarListaAdmin(); // Recarga la lista
         } catch (error) {
-          console.error("Error al guardar:", error);
-          alert("Error al guardar el producto");
+          alert("Error de conexión. Asegúrate de que Render esté despierto.");
         } finally {
           btn.textContent = "Guardar Artículo";
           btn.disabled = false;
         }
       });
 
-      // FUNCIÓN PARA DIBUJAR LA LISTA EN LA DERECHA
+      // 2. MOSTRAR PRODUCTOS EN LA DERECHA (GET a tu API C#)
       window.cargarListaAdmin = async function() {
         listContainer.innerHTML = '<p style="text-align: center; color: #94a3b8;">Cargando...</p>';
         try {
-          // Buscamos los productos en tu variable global (o llámalo de db.js)
-          const productos = window.productosGlobales || []; 
-          
+          const response = await fetch(`${API_URL_ADMIN}/api/garments`);
+          const productos = await response.json();
+
           if (productos.length === 0) {
             listContainer.innerHTML = '<p style="text-align: center; color: #94a3b8;">No hay productos registrados.</p>';
             return;
@@ -166,16 +168,25 @@
                 <p><span class="status-dot"></span> Sincronizado</p>
               </div>
               <div class="product-actions">
-                <button class="btn-edit" onclick="editarProductoAdmin('${p.id}')">Editar</button>
-                <button class="btn-delete" onclick="eliminarProductoAdmin('${p.id}')">Eliminar</button>
+                <button class="btn-edit" onclick="alert('Función Editar en desarrollo')">Editar</button>
+                <button class="btn-delete" onclick="alert('Función Eliminar en desarrollo')">Eliminar</button>
               </div>
             </div>
           `).join('');
 
         } catch (error) {
           console.error("Error al cargar lista:", error);
+          listContainer.innerHTML = '<p style="text-align: center; color: #ef4444;">Error al conectar con el servidor.</p>';
         }
       };
+
+      // 3. BOTÓN SINCRONIZAR
+      if (syncBtn) {
+        syncBtn.addEventListener("click", () => {
+          alert("Iniciando sincronización de datos offline...");
+          cargarListaAdmin(); // Simplemente recarga la lista
+        });
+      }
 
       // Cargar la lista al abrir la página
       cargarListaAdmin();
