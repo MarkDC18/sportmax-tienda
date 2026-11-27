@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SportMax | Panel de Administración</title>
+  <link rel="icon" href="icons/icon-192.png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  
+  <!-- AQUÍ CONECTAMOS EL CSS SEPARADO -->
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <div class="header-admin">
+    <h1><i class="fas fa-box-open"></i> SportMax - Administración</h1>
+    <a href="index.html" class="btn-volver"><i class="fas fa-store"></i> Volver a la Tienda</a>
+  </div>
+
+  <div class="admin-container">
+    
+    <!-- FORMULARIO IZQUIERDA -->
+    <div class="admin-form-section">
+      <h2>Registrar Prenda</h2>
+      <form id="garment-form">
+        <input type="hidden" id="item-id">
+        <input type="hidden" id="item-version">
+        
+        <div class="form-group">
+          <label>Nombre del Artículo</label>
+          <input id="name" required maxlength="120" placeholder="Ej: Camiseta de Fútbol">
+        </div>
+        
+        <div class="two-cols">
+          <div class="form-group">
+            <label>Tipo</label>
+            <select id="type" required>
+              <option value="">Seleccione...</option>
+              <option value="Camisa">Camisa / Polo</option>
+              <option value="Pelota">Pelota / Balón</option>
+              <option value="Calzado">Calzado / Zapatillas</option>
+              <option value="Accesorio">Accesorio</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Marca</label>
+            <input id="brand" maxlength="50" placeholder="Ej: Nike, Adidas">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Descripción</label>
+          <input id="description" maxlength="500" placeholder="Detalles del producto...">
+        </div>
+        
+        <div class="two-cols">
+          <div class="form-group">
+            <label>Talla</label>
+            <input id="size" placeholder="Ej: M, 42, Única">
+          </div>
+          <div class="form-group">
+            <label>Color</label>
+            <input id="color" placeholder="Ej: Rojo, Azul">
+          </div>
+        </div>
+        
+        <div class="two-cols">
+          <div class="form-group">
+            <label>Precio (S/)</label>
+            <input id="price" type="number" min="0" step="0.01" required placeholder="0.00">
+          </div>
+          <div class="form-group">
+            <label>Stock</label>
+            <input id="stock" type="number" min="0" step="1" required placeholder="0">
+          </div>
+        </div>
+        
+        <button type="submit" class="btn-save" id="btn-submit">Guardar Artículo</button>
+      </form>
+    </div>
+
+    <!-- LISTA DERECHA -->
+    <div class="admin-list-section">
+      <div class="list-header">
+        <h2>Inventario Actual</h2>
+        <button class="btn-sync" id="sync-now"><i class="fas fa-sync"></i> Sincronizar</button>
+      </div>
+      
+      <div class="product-list" id="admin-product-list">
+        <p style="text-align: center; color: #94a3b8; margin-top: 20px;">Cargando productos...</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="/js/config.js"></script>
+  <script type="module" src="/js/firebase-init.js"></script>
+  <script src="/js/db.js"></script>
+  <script src="/js/sync-manager.js"></script>
+  <script src="/js/app.js"></script>
+  
+  <!-- SCRIPT DE LÓGICA DEL ADMIN -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("garment-form");
+      const listContainer = document.getElementById("admin-product-list");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById("btn-submit");
+        btn.textContent = "Guardando...";
+        btn.disabled = true;
+
+        const garmentData = {
+          id: document.getElementById("item-id").value || null,
+          name: document.getElementById("name").value,
+          type: document.getElementById("type").value,
+          brand: document.getElementById("brand").value,
+          description: document.getElementById("description").value,
+          size: document.getElementById("size").value,
+          color: document.getElementById("color").value,
+          price: parseFloat(document.getElementById("price").value),
+          stock: parseInt(document.getElementById("stock").value)
+        };
+
+        try {
+          // AQUÍ CONECTAS CON TU LÓGICA EXISTENTE DE GUARDADO
+          if (window.guardarProducto) {
+             await window.guardarProducto(garmentData);
+          } else {
+             console.log("Datos a guardar:", garmentData);
+             alert("Producto guardado en modo Demo");
+          }
+          form.reset();
+          document.getElementById("item-id").value = "";
+          cargarListaAdmin(); 
+        } catch (error) {
+          console.error("Error:", error);
+          alert("Error al guardar el producto");
+        } finally {
+          btn.textContent = "Guardar Artículo";
+          btn.disabled = false;
+        }
+      });
+
+      window.cargarListaAdmin = async function() {
+        listContainer.innerHTML = '<p style="text-align: center; color: #94a3b8;">Cargando...</p>';
+        try {
+          const productos = window.productosGlobales || []; 
+          if (productos.length === 0) {
+            listContainer.innerHTML = '<p style="text-align: center; color: #94a3b8;">No hay productos registrados.</p>';
+            return;
+          }
+          listContainer.innerHTML = productos.map(p => `
+            <div class="product-item">
+              <div class="product-info">
+                <h3>${p.name}</h3>
+                <p>Talla: ${p.size || '-'} | Color: ${p.color || '-'} | Stock: ${p.stock}</p>
+                <p style="color: #10b981; font-weight: bold; margin-top: 5px;">S/ ${p.price.toFixed(2)}</p>
+                <p><span class="status-dot"></span> Sincronizado</p>
+              </div>
+              <div class="product-actions">
+                <button class="btn-edit" onclick="editarProductoAdmin('${p.id}')">Editar</button>
+                <button class="btn-delete" onclick="eliminarProductoAdmin('${p.id}')">Eliminar</button>
+              </div>
+            </div>
+          `).join('');
+        } catch (error) {
+          console.error("Error al cargar lista:", error);
+        }
+      };
+      cargarListaAdmin();
+    });
+  </script>
+</body>
+</html>
