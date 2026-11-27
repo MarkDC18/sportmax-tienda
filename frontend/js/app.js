@@ -19,10 +19,10 @@ async function cargarProductos() {
     
     const productos = await response.json();
     
-    // ¡IMPORTANTE! Exponemos los productos globalmente para que admin.html los use
+    // Exponemos los productos globalmente para que admin.html los use
     window.productosGlobales = productos; 
 
-    // Separamos los productos por categoría (simulando las secciones)
+    // Separamos los productos por categoría
     productosHombres = productos.slice(0, 5);
     productosMujeres = productos.slice(5, 9);
     productosNinos = productos.slice(9, 13);
@@ -40,20 +40,30 @@ async function cargarProductos() {
   }
 }
 
-// 4. FUNCIÓN PARA CARGAR PRODUCTOS DE PRUEBA (SOLO SI FALLA EL BACKEND)
+// 4. FUNCIÓN PARA CARGAR PRODUCTOS DE PRUEBA (PARA QUE SE VEA LLENO)
 function cargarProductosDemo() {
+  // Hombres
   productosHombres = [
-    { id: "h1", name: "Polo Oversize Blanco", type: "Camisa", brand: "Nike", size: "L", color: "Blanco", price: 89.90, oldPrice: 149.90, stock: 20, description: "Polo de algodón peinado.", img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=80", category: "Hombre Originals" },
-    { id: "h2", name: "Zapatillas Running", type: "Calzado", brand: "Nike", size: "42", color: "Rojo", price: 299.90, oldPrice: 399.90, stock: 15, description: "Máxima amortiguación.", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80", category: "Running" }
+    { id: "h1", name: "Polo Oversize Blanco", type: "Camisa", brand: "Nike", size: "L", color: "Blanco", price: 89.90, oldPrice: 149.90, stock: 20, description: "Polo de algodón peinado.", img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=80" },
+    { id: "h2", name: "Zapatillas Running Pro", type: "Calzado", brand: "Nike", size: "42", color: "Rojo", price: 299.90, oldPrice: 399.90, stock: 15, description: "Máxima amortiguación.", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80" },
+    { id: "h3", name: "Short Deportivo", type: "Camisa", brand: "Adidas", size: "M", color: "Negro", price: 59.90, oldPrice: 89.90, stock: 30, description: "Tela transpirable.", img: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=600&q=80" },
+    { id: "h4", name: "Casaca Cortavientos", type: "Camisa", brand: "Puma", size: "L", color: "Azul", price: 129.90, oldPrice: 199.90, stock: 10, description: "Ideal para días fríos.", img: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&q=80" }
   ];
+
+  // Mujeres
   productosMujeres = [
-    { id: "m1", name: "Top Deportivo", type: "Camisa", brand: "Puma", size: "S", color: "Rosa", price: 69.90, oldPrice: 99.90, stock: 25, description: "Top con soporte medio.", img: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=600&q=80", category: "Mujer Training" }
+    { id: "m1", name: "Top Deportivo Flex", type: "Camisa", brand: "Puma", size: "S", color: "Rosa", price: 69.90, oldPrice: 99.90, stock: 25, description: "Top con soporte medio.", img: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=600&q=80" },
+    { id: "m2", name: "Leggings Térmicos", type: "Camisa", brand: "Nike", size: "M", color: "Negro", price: 109.90, oldPrice: 159.90, stock: 18, description: "Máxima elasticidad.", img: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=600&q=80" },
+    { id: "m3", name: "Zapatillas Training", type: "Calzado", brand: "Adidas", size: "38", color: "Blanco", price: 219.90, oldPrice: 289.90, stock: 12, description: "Suela antideslizante.", img: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=600&q=80" }
   ];
+
+  // Niños
   productosNinos = [
-    { id: "n1", name: "Zapatillas Colegiales", type: "Calzado", brand: "Bata", size: "32", color: "Negro", price: 89.90, oldPrice: 129.90, stock: 50, description: "Zapatillas resistentes.", img: "https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=600&q=80", category: "Niños Originals" }
+    { id: "n1", name: "Zapatillas Colegiales", type: "Calzado", brand: "Bata", size: "32", color: "Negro", price: 89.90, oldPrice: 129.90, stock: 50, description: "Resistentes y cómodas.", img: "https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=600&q=80" },
+    { id: "n2", name: "Conjunto Deportivo", type: "Camisa", brand: "Adidas", size: "8 años", color: "Azul", price: 79.90, oldPrice: 119.90, stock: 20, description: "Conjunto de short y polo.", img: "https://images.unsplash.com/photo-1519457431-44ccd64a579b?w=600&q=80" },
+    { id: "n3", name: "Pelota de Fútbol", type: "Pelota", brand: "Nike", size: "Única", color: "Blanco", price: 49.90, oldPrice: 79.90, stock: 40, description: "Balón oficial tamaño 4.", img: "https://images.unsplash.com/photo-1614632537190-23e4146777db?w=600&q=80" }
   ];
   
-  // Guardamos también los demo en global para que el admin los vea si el backend falla
   window.productosGlobales = [...productosHombres, ...productosMujeres, ...productosNinos];
 
   renderizarCategoria("items-hombres", productosHombres);
@@ -92,9 +102,6 @@ function renderizarCategoria(containerId, productos) {
   }
 }
 
-// NOTA: EL CÓDIGO DE GUARDAR PRODUCTO (SECCIÓN 6 DE TU APP.JS ORIGINAL) 
-// HA SIDO ELIMINADO DE AQUÍ PORQUE AHORA VIVE EN ADMIN.HTML.
-
 // 7. LÓGICA DEL CARRITO Y DETALLE
 window.abrirDetalleProducto = (id) => {
   const todos = [...productosHombres, ...productosMujeres, ...productosNinos];
@@ -129,8 +136,6 @@ $("cart-btn").onclick = () => {
   $("cart-step-2").style.display = "none";
   $("cart-modal").style.display = "block"; 
 };
-
-// NOTA: LA LÍNEA $("btn-admin") FUE ELIMINADA PORQUE AHORA EL BOTÓN ES UN ENLACE HTML.
 
 $("modal-add-btn").onclick = () => {
   if (!productoSeleccionado) return;
