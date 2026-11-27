@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   
-  <!-- AQUÍ CONECTAMOS EL CSS SEPARADO -->
+  <!-- Conectamos al CSS que acabamos de crear -->
   <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
@@ -101,7 +101,7 @@
   <script src="/js/sync-manager.js"></script>
   <script src="/js/app.js"></script>
   
-  <!-- SCRIPT DE LÓGICA DEL ADMIN -->
+  <!-- LÓGICA EXCLUSIVA DEL ADMIN -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const form = document.getElementById("garment-form");
@@ -126,18 +126,18 @@
         };
 
         try {
-          // AQUÍ CONECTAS CON TU LÓGICA EXISTENTE DE GUARDADO
+          // AQUÍ SE CONECTA CON TU FUNCIÓN DE GUARDADO EXISTENTE
           if (window.guardarProducto) {
              await window.guardarProducto(garmentData);
           } else {
-             console.log("Datos a guardar:", garmentData);
+             console.log("Datos a guardar (Modo Demo):", garmentData);
              alert("Producto guardado en modo Demo");
           }
           form.reset();
           document.getElementById("item-id").value = "";
-          cargarListaAdmin(); 
+          cargarListaAdmin(); // Recarga la lista
         } catch (error) {
-          console.error("Error:", error);
+          console.error("Error al guardar:", error);
           alert("Error al guardar el producto");
         } finally {
           btn.textContent = "Guardar Artículo";
@@ -145,20 +145,24 @@
         }
       });
 
+      // FUNCIÓN PARA DIBUJAR LA LISTA EN LA DERECHA
       window.cargarListaAdmin = async function() {
         listContainer.innerHTML = '<p style="text-align: center; color: #94a3b8;">Cargando...</p>';
         try {
+          // Buscamos los productos en tu variable global (o llámalo de db.js)
           const productos = window.productosGlobales || []; 
+          
           if (productos.length === 0) {
             listContainer.innerHTML = '<p style="text-align: center; color: #94a3b8;">No hay productos registrados.</p>';
             return;
           }
+
           listContainer.innerHTML = productos.map(p => `
             <div class="product-item">
               <div class="product-info">
                 <h3>${p.name}</h3>
                 <p>Talla: ${p.size || '-'} | Color: ${p.color || '-'} | Stock: ${p.stock}</p>
-                <p style="color: #10b981; font-weight: bold; margin-top: 5px;">S/ ${p.price.toFixed(2)}</p>
+                <p style="color: #10b981; font-weight: bold; margin-top: 5px;">S/ ${Number(p.price).toFixed(2)}</p>
                 <p><span class="status-dot"></span> Sincronizado</p>
               </div>
               <div class="product-actions">
@@ -167,10 +171,13 @@
               </div>
             </div>
           `).join('');
+
         } catch (error) {
           console.error("Error al cargar lista:", error);
         }
       };
+
+      // Cargar la lista al abrir la página
       cargarListaAdmin();
     });
   </script>
