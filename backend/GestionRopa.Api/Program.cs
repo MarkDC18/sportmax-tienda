@@ -10,7 +10,7 @@ if (!string.IsNullOrWhiteSpace(renderPort))
 
 var projectId = Environment.GetEnvironmentVariable("FIREBASE_PROJECT_ID")
     ?? builder.Configuration["Firebase:ProjectId"]
-    ?? "yancasaycoc";
+    ?? "sportmax-app-6fe98"; // <-- CAMBIO 1: Tu nuevo ID
 
 builder.Services.AddSingleton(_ =>
 {
@@ -44,9 +44,10 @@ builder.Services.AddScoped<GarmentRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// <-- CAMBIO 2: Pon tu URL de Render en los permisos
 var defaultOrigins = string.Join(',', new[] {
     "http://localhost:5500", "http://127.0.0.1:5500",
-    "https://yancasaycoc.web.app", "https://yancasaycoc.firebaseapp.com"
+    "https://sportmax-tienda-1.onrender.com" 
 });
 var allowedOrigins = (Environment.GetEnvironmentVariable("ALLOWED_ORIGINS") ?? defaultOrigins)
     .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
@@ -63,11 +64,10 @@ if (app.Environment.IsDevelopment() || Environment.GetEnvironmentVariable("ENABL
     app.UseSwaggerUI();
 }
 
-// CAMBIO 1: Mensajes de inicio adaptados a tu tienda
 app.MapGet("/", () => Results.Text("API Tienda Deportiva SportMax funcionando"));
 app.MapGet("/health", () => Results.Ok(new { status = "ok", api = "gestion-deportiva", firebaseProject = projectId }));
 
-var api = app.MapGroup("/api/garments"); // Puedes dejarlo como garments o cambiarlo a /api/productos si quieres
+var api = app.MapGroup("/api/garments");
 
 api.MapGet("/", async (GarmentRepository repo, CancellationToken ct) =>
     Results.Ok(await repo.GetAllAsync(ct)));
@@ -80,9 +80,8 @@ api.MapGet("/{id}", async (string id, GarmentRepository repo, CancellationToken 
 
 api.MapPost("/", async (GarmentInput input, GarmentRepository repo, CancellationToken ct) =>
 {
-    // CAMBIO 2: Validaciones para tu tienda deportiva
     if (string.IsNullOrWhiteSpace(input.Name) || string.IsNullOrWhiteSpace(input.Type))
-        return Results.BadRequest(new { message = "El nombre y el tipo de artículo (Camisa, Pelota, etc.) son obligatorios." });
+        return Results.BadRequest(new { message = "El nombre y el tipo de artículo son obligatorios." });
     if (input.Price < 0 || input.Stock < 0)
         return Results.BadRequest(new { message = "Precio y stock no pueden ser negativos." });
 
@@ -92,7 +91,6 @@ api.MapPost("/", async (GarmentInput input, GarmentRepository repo, Cancellation
 
 api.MapPut("/{id}", async (string id, GarmentUpdate input, GarmentRepository repo, CancellationToken ct) =>
 {
-    // CAMBIO 3: Validación también en la actualización
     if (string.IsNullOrWhiteSpace(input.Name) || string.IsNullOrWhiteSpace(input.Type) || input.Price < 0 || input.Stock < 0)
         return Results.BadRequest(new { message = "Verifica nombre, tipo, precio y stock." });
     try
