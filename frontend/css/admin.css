@@ -1,0 +1,189 @@
+/* =========================================
+   ESTILOS EXCLUSIVOS DEL PANEL DE ADMIN
+   ========================================= */
+
+:root {
+  --admin-primary: #0f172a;
+  --admin-blue: #1976d2;
+  --admin-bg: #f4f6f9;
+  --admin-white: #ffffff;
+  --admin-text: #333333;
+  --admin-border: #e2e8f0;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--admin-bg);
+  margin: 0;
+  padding: 20px;
+  color: var(--admin-text);
+}
+
+/* Cabecera */
+.header-admin {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--admin-primary);
+  color: white;
+  padding: 15px 30px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.header-admin h1 { margin: 0; font-size: 1.5rem; }
+
+.btn-volver {
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  background: rgba(255,255,255,0.2);
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.btn-volver:hover { background: rgba(255,255,255,0.3); }
+
+/* Contenedor principal de 2 columnas */
+.admin-container {
+  display: flex;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Columna Izquierda: Formulario */
+.admin-form-section {
+  flex: 1;
+  background: var(--admin-white);
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.admin-form-section h2 {
+  margin-top: 0;
+  color: var(--admin-primary);
+  border-bottom: 2px solid var(--admin-border);
+  padding-bottom: 10px;
+}
+
+.form-group { margin-bottom: 15px; }
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--admin-border);
+  border-radius: 5px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.two-cols { display: flex; gap: 10px; }
+.two-cols .form-group { flex: 1; }
+
+.btn-save {
+  background: var(--admin-primary);
+  color: white;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 10px;
+  transition: 0.3s;
+}
+
+.btn-save:hover { background: #1e293b; }
+.btn-save:disabled { background: #94a3b8; cursor: not-allowed; }
+
+/* Columna Derecha: Lista de Productos */
+.admin-list-section {
+  flex: 1.2;
+  background: var(--admin-white);
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--admin-border);
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.list-header h2 { margin: 0; color: var(--admin-primary); }
+
+.btn-sync {
+  background: #e3f2fd;
+  color: var(--admin-blue);
+  border: 1px solid #90caf9;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn-sync:hover { background: #bbdefb; }
+
+.product-list {
+  overflow-y: auto;
+  max-height: 600px;
+  padding-right: 5px;
+}
+
+/* Tarjeta de cada producto en la lista */
+.product-item {
+  border: 1px solid var(--admin-border);
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fafafa;
+}
+
+.product-info h3 { margin: 0 0 5px 0; font-size: 1rem; color: var(--admin-primary); }
+.product-info p { margin: 0; font-size: 0.85rem; color: #64748b; }
+
+.product-actions button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.btn-edit { background: #e3f2fd; color: var(--admin-blue); }
+.btn-delete { background: #ffebee; color: #c62828; }
+
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  margin-right: 5px;
+}
