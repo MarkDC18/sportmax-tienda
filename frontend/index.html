@@ -7,10 +7,70 @@
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icons/icon-192.png">
   
-  <!-- RUTA CORREGIDA -->
-  <link rel="stylesheet" href="css/styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  
+  <!-- ESTILOS DIRECTOS EN EL HTML PARA EVITAR ERRORES EN RENDER -->
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Montserrat', sans-serif; background: #fff; color: #000; }
+    .top-bar { background: #000; color: #fff; text-align: center; padding: 8px; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; }
+    .navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; border-bottom: 1px solid #eee; position: sticky; top: 0; background: #fff; z-index: 100; }
+    .nav-brand { font-weight: 900; font-size: 1.8rem; letter-spacing: 2px; }
+    .search-bar { background: #f4f4f4; padding: 8px 15px; border-radius: 20px; display: flex; align-items: center; width: 300px; }
+    .search-bar input { border: none; background: transparent; outline: none; margin-left: 10px; width: 100%; font-family: inherit; }
+    .nav-links { display: flex; gap: 25px; list-style: none; font-weight: 600; font-size: 0.9rem; }
+    .nav-links a { text-decoration: none; color: #000; }
+    .nav-links a:hover, .nav-links a.highlight { color: #e11d48; }
+    .nav-actions { display: flex; align-items: center; gap: 20px; }
+    .btn-admin { background: none; border: 1px solid #000; padding: 8px 15px; border-radius: 5px; font-weight: 600; cursor: pointer; font-family: inherit; font-size: 0.85rem; color: #000; }
+    .btn-admin:hover { background: #f4f4f4; }
+    .cart-icon { position: relative; font-size: 1.2rem; cursor: pointer; }
+    .cart-count { position: absolute; top: -8px; right: -10px; background: #e11d48; color: #fff; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 50%; }
+    .hero-banner { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); color: #fff; padding: 80px 40px; display: flex; align-items: center; min-height: 400px; }
+    .hero-content h1 { font-size: 4rem; line-height: 1; margin-bottom: 20px; font-weight: 900; }
+    .hero-content h1 span { color: #e11d48; }
+    .hero-content p { font-size: 1.2rem; margin-bottom: 30px; }
+    .btn-shop { background: #fff; color: #000; padding: 15px 30px; text-decoration: none; font-weight: 700; text-transform: uppercase; font-size: 0.9rem; display: inline-block; }
+    .benefits-bar { display: flex; justify-content: center; gap: 40px; padding: 15px; border-bottom: 1px solid #eee; font-size: 0.85rem; font-weight: 600; }
+    .main-content { padding: 40px; max-width: 1400px; margin: 0 auto; }
+    .catalog-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .catalog-header h2 { font-size: 1.8rem; font-weight: 800; text-transform: uppercase; }
+    .btn-sync { background: #f0f9ff; border: 1px solid #bae6fd; color: #0284c7; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; font-family: inherit; }
+    .items { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+    .item { border: 1px solid #eee; padding: 15px; transition: 0.3s; }
+    .item:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+    .item img { width: 100%; height: 250px; object-fit: cover; background: #f8f9fa; margin-bottom: 15px; cursor: pointer; }
+    .price-container { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .price { font-weight: 800; font-size: 1.1rem; }
+    .old-price { text-decoration: line-through; color: #888; font-size: 0.9rem; }
+    .badge { background: #e11d48; color: #fff; font-size: 0.7rem; padding: 2px 6px; font-weight: bold; }
+    .item h3 { font-size: 1rem; margin-bottom: 5px; font-weight: 700; cursor: pointer; }
+    .originals-link { font-weight: 600; font-size: 0.85rem; margin-bottom: 2px; }
+    .colors-link { font-size: 0.75rem; color: #666; text-decoration: underline; margin-bottom: 15px; }
+    .item-actions { display: flex; gap: 10px; }
+    .item-actions button { flex: 1; padding: 10px; border: 1px solid #000; background: #fff; font-weight: 700; cursor: pointer; font-size: 0.8rem; transition: 0.2s; }
+    .item-actions button:hover { background: #000; color: #fff; }
+    .site-footer { border-top: 1px solid #eee; padding: 20px; text-align: center; font-size: 0.8rem; color: #666; margin-top: 40px; }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; }
+    .modal-content-dark, .modal-content-dark-cart { background: #fff; width: 90%; max-width: 800px; margin: 50px auto; position: relative; padding: 30px; border-radius: 8px; }
+    .modal-content-dark { display: flex; gap: 30px; }
+    .modal-content-dark img { width: 50%; object-fit: cover; }
+    .modal-info { width: 50%; display: flex; flex-direction: column; }
+    .close-btn { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; }
+    .brand-text { font-weight: 700; text-transform: uppercase; margin-bottom: 5px; }
+    .detail-text { color: #666; font-size: 0.9rem; margin-bottom: 20px; }
+    .price-text { font-size: 1.5rem; font-weight: 800; margin-bottom: 10px; }
+    .stock-text { color: #e11d48; font-size: 0.9rem; margin-bottom: 20px; }
+    .desc-text { color: #444; font-size: 0.9rem; margin-bottom: 30px; line-height: 1.5; }
+    .btn-add-cart { background: #000; color: #fff; padding: 15px; border: none; font-weight: 700; cursor: pointer; margin-top: auto; }
+    .modal-content-dark-cart { max-width: 500px; }
+    .modal-content-dark-cart label { display: block; margin-bottom: 15px; font-weight: 600; font-size: 0.9rem; }
+    .modal-content-dark-cart input, .modal-content-dark-cart select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; margin-top: 5px; font-family: inherit; }
+    .btn-checkout { width: 100%; padding: 15px; font-weight: 800; cursor: pointer; background: #000; color: #fff; }
+    .actions { display: flex; gap: 10px; }
+    .actions button { flex: 1; padding: 15px; border: none; font-weight: 700; cursor: pointer; border-radius: 4px; }
+  </style>
 </head>
 <body>
 
@@ -31,9 +91,7 @@
       <li><a href="#" class="highlight">Ofertas</a></li>
     </ul>
     <div class="nav-actions">
-      <!-- Enlace a la nueva página de admin -->
       <a href="admin.html" class="btn-admin" style="text-decoration: none; display: inline-flex; align-items: center;"><i class="fas fa-cog"></i> Admin</a>
-      
       <div class="cart-icon" id="cart-btn">
         <i class="fas fa-shopping-bag"></i>
         <span class="cart-count" id="cart-count">0</span>
@@ -138,7 +196,7 @@
 
           <div id="card-details">
             <label>Número de Tarjeta<input type="text" id="pay-card" required placeholder="0000 0000 0000 0000" maxlength="19"></label>
-            <div class="two">
+            <div style="display: flex; gap: 10px;">
               <label>Vencimiento<input type="text" id="pay-exp" required placeholder="MM/YY" maxlength="5"></label>
               <label>CVV<input type="password" id="pay-cvv" required placeholder="123" maxlength="3"></label>
             </div>
@@ -154,10 +212,10 @@
   </div>
 
   <!-- RUTAS CORREGIDAS -->
-  <script src="js/config.js"></script>
-  <script type="module" src="js/firebase-init.js"></script>
-  <script src="js/db.js"></script>
-  <script src="js/sync-manager.js"></script>
-  <script src="js/app.js"></script>
+  <script src="/js/config.js"></script>
+  <script type="module" src="/js/firebase-init.js"></script>
+  <script src="/js/db.js"></script>
+  <script src="/js/sync-manager.js"></script>
+  <script src="/js/app.js"></script>
 </body>
 </html>
