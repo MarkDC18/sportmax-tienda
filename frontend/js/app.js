@@ -19,13 +19,14 @@ async function cargarProductos() {
     
     const productos = await response.json();
     
+    // ¡IMPORTANTE! Exponemos los productos globalmente para que admin.html los use
+    window.productosGlobales = productos; 
+
     // Separamos los productos por categoría (simulando las secciones)
-    // Como no tenemos una propiedad "categoría" estricta, los repartimos.
     productosHombres = productos.slice(0, 5);
     productosMujeres = productos.slice(5, 9);
     productosNinos = productos.slice(9, 13);
 
-    // Si no hay productos en Firebase, mostramos los de prueba para que no se vea vacío
     if (productos.length === 0) {
       cargarProductosDemo();
     } else {
@@ -35,7 +36,7 @@ async function cargarProductos() {
     }
   } catch (error) {
     console.error("Error de conexión, usando datos locales:", error);
-    cargarProductosDemo(); // Si falla el backend, mostramos los de prueba
+    cargarProductosDemo(); 
   }
 }
 
@@ -51,6 +52,10 @@ function cargarProductosDemo() {
   productosNinos = [
     { id: "n1", name: "Zapatillas Colegiales", type: "Calzado", brand: "Bata", size: "32", color: "Negro", price: 89.90, oldPrice: 129.90, stock: 50, description: "Zapatillas resistentes.", img: "https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=600&q=80", category: "Niños Originals" }
   ];
+  
+  // Guardamos también los demo en global para que el admin los vea si el backend falla
+  window.productosGlobales = [...productosHombres, ...productosMujeres, ...productosNinos];
+
   renderizarCategoria("items-hombres", productosHombres);
   renderizarCategoria("items-mujeres", productosMujeres);
   renderizarCategoria("items-ninos", productosNinos);
@@ -66,7 +71,6 @@ function renderizarCategoria(containerId, productos) {
     const card = document.createElement("article"); card.className = "item";
     const descuento = item.oldPrice ? Math.round(((item.oldPrice - item.price) / item.oldPrice) * 100) : 0;
     
-    // Si el producto viene de Firebase, puede no tener "img". Le ponemos una por defecto.
     const imagen = item.img || "https://images.unsplash.com/photo-1519861531473-9200262188bf?w=600&q=80";
 
     card.innerHTML = `
@@ -88,47 +92,8 @@ function renderizarCategoria(containerId, productos) {
   }
 }
 
-// 6. LÓGICA DE GUARDAR PRODUCTO (ENVIAR A RENDER/FIREBASE)
-$("garment-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  
-  const data = {
-    name: $("name").value.trim(),
-    type: $("type").value,
-    brand: $("brand").value.trim(),
-    description: $("description").value.trim(),
-    size: $("size").value.trim(),
-    color: $("color").value.trim(),
-    price: Number($("price").value),
-    stock: Number($("stock").value)
-  };
-
-  const btn = e.target.querySelector('button[type="submit"]');
-  btn.textContent = "Guardando...";
-  btn.disabled = true;
-
-  try {
-    const response = await fetch(`${API_URL}/api/garments`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-
-    if (response.ok) {
-      alert("¡Producto guardado con éxito en Firebase!");
-      $("garment-form").reset();
-      $("admin-modal").style.display = "none";
-      cargarProductos(); // Recargar la lista
-    } else {
-      alert("Error al guardar. Revisa los datos.");
-    }
-  } catch (error) {
-    alert("Error de conexión. Asegúrate de que Render esté despierto.");
-  } finally {
-    btn.textContent = "Guardar Artículo";
-    btn.disabled = false;
-  }
-});
+// NOTA: EL CÓDIGO DE GUARDAR PRODUCTO (SECCIÓN 6 DE TU APP.JS ORIGINAL) 
+// HA SIDO ELIMINADO DE AQUÍ PORQUE AHORA VIVE EN ADMIN.HTML.
 
 // 7. LÓGICA DEL CARRITO Y DETALLE
 window.abrirDetalleProducto = (id) => {
@@ -164,7 +129,9 @@ $("cart-btn").onclick = () => {
   $("cart-step-2").style.display = "none";
   $("cart-modal").style.display = "block"; 
 };
-$("btn-admin").onclick = () => $("admin-modal").style.display = "block";
+
+// NOTA: LA LÍNEA $("btn-admin") FUE ELIMINADA PORQUE AHORA EL BOTÓN ES UN ENLACE HTML.
+
 $("modal-add-btn").onclick = () => {
   if (!productoSeleccionado) return;
   const existe = carrito.find(p => p.id === productoSeleccionado.id);
@@ -174,7 +141,7 @@ $("modal-add-btn").onclick = () => {
   alert(`¡${productoSeleccionado.name} añadido a tu bolsa!`);
 };
 
-function renderCarrito() { /* ... esta función se queda igual ... */ 
+function renderCarrito() { 
   const container = $("cart-items-container");
   container.innerHTML = ""; totalAPagar = 0;
   if (carrito.length === 0) { container.innerHTML = "<p style='color:#64748b; text-align:center; padding: 20px;'>Tu bolsa está vacía.</p>"; $("cart-total").textContent = "S/ 0.00"; return; }
@@ -199,5 +166,5 @@ $("payment-form").addEventListener("submit", (e) => { e.preventDefault(); alert(
 
 // 8. INICIALIZAR TODO
 document.addEventListener("DOMContentLoaded", () => {
-  cargarProductos(); // Esto intentará traer datos reales de Firebase
+  cargarProductos(); 
 });
