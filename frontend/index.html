@@ -74,46 +74,6 @@
   </main>
 
   <footer class="site-footer">
-    <div class="footer-grid">
-      <div class="footer-col">
-        <h4>PRODUCTOS</h4>
-        <ul>
-          <li><a href="#">Mujer</a></li>
-          <li><a href="#">Hombre</a></li>
-          <li><a href="#">Calzado</a></li>
-          <li><a href="#">Zapatillas</a></li>
-          <li><a href="#">Ropa</a></li>
-          <li><a href="#">Accesorios</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>DEPORTES</h4>
-        <ul>
-          <li><a href="#">Fútbol</a></li>
-          <li><a href="#">Running</a></li>
-          <li><a href="#">Básquet</a></li>
-          <li><a href="#">Training</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>ASISTENCIA</h4>
-        <ul>
-          <li><a href="#">Dudas Frecuentes</a></li>
-          <li><a href="#">Realizar Pedidos</a></li>
-          <li><a href="#">Envíos y Entregas</a></li>
-          <li><a href="#">Devoluciones</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>SÍGUENOS</h4>
-        <div class="social-icons">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-tiktok"></i></a>
-          <a href="#"><i class="fab fa-youtube"></i></a>
-        </div>
-      </div>
-    </div>
     <div class="footer-bottom">
       <p>&copy; 2026 SportMax. Todos los derechos reservados.</p>
     </div>
@@ -145,7 +105,7 @@
       <span class="close-btn" onclick="document.getElementById('cart-modal').style.display='none'">&times;</span>
       
       <div id="cart-step-1">
-        <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem; text-align: center; margin-bottom: 30px;">Bolsa de compra</h2>
+        <h2 style="font-size: 2rem; text-align: center; margin-bottom: 30px;">Bolsa de compra</h2>
         <div id="cart-items-container" style="max-height: 400px; overflow-y: auto; padding-right: 10px;"></div>
         <div style="border-top: 1px solid #e2e8f0; margin-top: 20px; padding-top: 20px;">
           <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 900; margin-bottom: 30px;">
@@ -158,7 +118,7 @@
       </div>
 
       <div id="cart-step-2" style="display: none;">
-        <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem; text-align: center; margin-bottom: 20px;">Finalizar Compra</h2>
+        <h2 style="font-size: 2rem; text-align: center; margin-bottom: 20px;">Finalizar Compra</h2>
         <form id="payment-form">
           <label>Nombre Completo<input type="text" id="pay-name" required placeholder="Ej: Juan Pérez"></label>
           <label>Correo Electrónico<input type="email" id="pay-email" required placeholder="ejemplo@gmail.com"></label>
@@ -226,10 +186,11 @@
     </div>
   </div>
 
-  <script src="js/config.js"></script>
-  <script type="module" src="js/firebase-init.js"></script>
-  <script src="js/db.js"></script>
-  <script src="js/sync-manager.js"></script>
-  <script src="js/app.js"></script>
+  <!-- AQUÍ ESTÁN LOS SCRIPTS QUE HACEN FUNCIONAR LOS BOTONES -->
+  <script src="/js/config.js"></script>
+  <script type="module" src="/js/firebase-init.js"></script>
+  <script src="/js/db.js"></script>
+  <script src="/js/sync-manager.js"></script>
+  <script src="/js/app.js"></script>
 </body>
 </html>
