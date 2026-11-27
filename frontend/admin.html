@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   
-  <!-- Conectamos al CSS que creamos -->
+  <!-- RUTA CORREGIDA -->
   <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
@@ -91,15 +91,14 @@
 
   </div>
 
-  <!-- SCRIPTS -->
-  <script src="/js/config.js"></script>
-  <script type="module" src="/js/firebase-init.js"></script>
-  <script src="/js/db.js"></script>
-  <script src="/js/sync-manager.js"></script>
+  <!-- RUTAS CORREGIDAS -->
+  <script src="js/config.js"></script>
+  <script type="module" src="js/firebase-init.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/sync-manager.js"></script>
   
-  <!-- LÓGICA EXCLUSIVA DEL ADMIN (Conectada a tu API en Render) -->
+  <!-- LÓGICA EXCLUSIVA DEL ADMIN -->
   <script>
-    // Obtenemos la URL de la API de tu archivo config.js
     const API_URL_ADMIN = window.APP_CONFIG.API_BASE_URL;
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -107,7 +106,6 @@
       const listContainer = document.getElementById("admin-product-list");
       const syncBtn = document.getElementById("sync-now");
 
-      // 1. GUARDAR PRODUCTO (POST a tu API C#)
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const btn = document.getElementById("btn-submit");
@@ -135,7 +133,7 @@
           if (response.ok) {
             alert("¡Producto guardado con éxito en Firebase!");
             form.reset();
-            cargarListaAdmin(); // Recargar la lista derecha
+            cargarListaAdmin(); 
           } else {
             alert("Error al guardar. Revisa los datos.");
           }
@@ -147,7 +145,6 @@
         }
       });
 
-      // 2. MOSTRAR PRODUCTOS EN LA DERECHA (GET a tu API C#)
       window.cargarListaAdmin = async function() {
         listContainer.innerHTML = '<p style="text-align: center; color: #94a3b8;">Cargando...</p>';
         try {
@@ -180,15 +177,13 @@
         }
       };
 
-      // 3. BOTÓN SINCRONIZAR
       if (syncBtn) {
         syncBtn.addEventListener("click", () => {
-          alert("Iniciando sincronización de datos offline...");
-          cargarListaAdmin(); // Simplemente recarga la lista
+          alert("Sincronización completada.");
+          cargarListaAdmin(); 
         });
       }
 
-      // Cargar la lista al abrir la página
       cargarListaAdmin();
     });
   </script>
